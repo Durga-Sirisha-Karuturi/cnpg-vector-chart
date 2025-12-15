@@ -1,0 +1,14 @@
+{{- if .Values.pgbouncer.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: PgBouncer
+metadata:
+  name: cnpg-vector-pgbouncer
+spec:
+  cluster:
+    name: cnpg-vector
+  instances: {{ .Values.pgbouncer.replicas }}
+  imageName: {{ .Values.pgbouncer.image }}
+  poolMode: {{ .Values.pgbouncer.poolMode }}
+  port: {{ .Values.pgbouncer.port }}
+{{- end }}
+

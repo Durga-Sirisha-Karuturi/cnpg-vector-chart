@@ -1,0 +1,26 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cnpg-vector
+spec:
+  instances: {{ .Values.postgres.instances }}
+  imageName: {{ .Values.postgres.image }}
+
+  storage:
+    size: {{ .Values.postgres.storage.size }}
+
+  superuserSecret:
+    name: cnpg-vector-superuser
+
+  backup:
+    barmanObject:
+      destinationPath: "s3://{{ .Values.s3.bucket }}"
+      s3Credentials:
+        accessKeyId:
+          name: cnpg-vector-s3
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: cnpg-vector-s3
+          key: SECRET_ACCESS_KEY
+      endpointURL: "{{ .Values.s3.endpoint }}"
+

@@ -1,0 +1,26 @@
+postgres:
+  image: "ghcr.io/cloudnative-pg/postgresql:16.11-standard-trixie"
+  instances: 3
+  storage:
+    size: 1Gi
+  superuser:
+    name: postgres
+    password: "postgres123"
+
+pgbouncer:
+  enabled: false
+  replicas: 2
+  image: "bitnami/pgbouncer:latest"
+  poolMode: "transaction"
+  port: 6432
+
+s3:
+  enabled: true
+  bucket: "my-pg-backups"
+  endpoint: "http://100.64.188.229:30691"
+  accessKey: "admin"
+  secretKey: "admin12345"
+  path: "backup"
+  region: "minio"
+  schedule: "0 * * * *"
+
